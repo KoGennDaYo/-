@@ -31,7 +31,7 @@ void readWordsFromFile() {
 
 // 游戏主逻辑
 void playGame() {
-    int level = 1, correctCount = 0, totalQuestions = 10, num = 0;
+    int correctCount = 0, totalQuestions = 10, num = 0;
     int currentQuestion = 0;
     srand((unsigned int)time(NULL));
 
@@ -77,14 +77,23 @@ void playGame() {
 }
 
 int main() {
+    int level = 1;
+    char choose;
     printf("=======================================\n");
     printf("\t欢迎进行词汇游戏\n");
     printf("\t随机生成词汇中......\n");
     printf("\t生成完毕！\n");
-    printf("\t当前难度，第一关\n");
+    printf("\t功能列表如下：\n");
+    printf("\t1.第一关\n");
+    printf("\t2.第二关：\n");
+    printf("\t3.第三关：\n");
     printf("=======================================\n");
+    printf("请输入您的选择：");
+    scanf("%d",&level);
     readWordsFromFile();
-    playGame();
-
+    printf("加载完毕，输入y即可开始游戏！");
+    scanf("%c",&choose);
+    if (choose == y)
+        playGame();
     return 0;
 }
