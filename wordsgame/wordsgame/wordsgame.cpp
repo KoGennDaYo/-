@@ -1,14 +1,17 @@
-﻿#define _CRT_SECURE_NO_WARNINGS
+#define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 #include <time.h>
 
-#define MAX_WORDS 100
-#define MAX_LENGTH 50
+#define MAX_WORDS 999
+#define MAX_LENGTH 999
 
 char englishWords[MAX_WORDS][MAX_LENGTH];
 char chineseWords[MAX_WORDS][MAX_LENGTH];
+
+int level = 1;
+char choose = 0;
 
 void readWordsFromFile() {
     FILE* fp;
@@ -38,23 +41,36 @@ void playGame() {
     while (1) {
         if (num == totalQuestions) {
             double accuracy = (double)correctCount / totalQuestions * 100;
-            printf("关卡 %d 结束，您的准确率为：%.2f%%\n", level, accuracy);
+            printf("=================================================\n\n");
+            printf("\t关卡 %d 结束，您的准确率为：%.2f%%\n\n", level, accuracy);
+            printf("=================================================\n\n");
 
-            if (accuracy > 60.0) {
+            if (accuracy > 80.0) {
                 level++;
-                printf("难度升级！\n");
                 if (level == 2) {
-                    totalQuestions = 20;
+                    totalQuestions = 15;
+                    printf("\t难度升级！\n");
+                    printf("\t第二关单词数： %d 个\n\n", totalQuestions);
+                    printf("=================================================\n\n");
                 }
                 else if (level == 3) {
-                    totalQuestions = 30;
+                    totalQuestions = 20;
+                    printf("\t难度升级！\n");
+                    printf("\t第三关单词数： %d 个\n", totalQuestions);
+                    printf("=================================================\n");
+                }
+                else if (level == 4) {
+                    printf("\t恭喜通关！\n");
+                    printf("=================================================\n");
+                    return;
                 }
                 num = 0;
                 correctCount = 0;
                 continue;
             }
             else {
-                printf("游戏结束\n");
+                printf("\t游戏结束\n");
+                printf("=======================================\n");
                 return;
             }
         }
@@ -77,8 +93,6 @@ void playGame() {
 }
 
 int main() {
-    int level = 1;
-    char choose;
     printf("=======================================\n");
     printf("\t欢迎进行词汇游戏\n");
     printf("\t随机生成词汇中......\n");
@@ -89,11 +103,24 @@ int main() {
     printf("\t3.第三关：\n");
     printf("=======================================\n");
     printf("请输入您的选择：");
-    scanf("%d",&level);
-    readWordsFromFile();
-    printf("加载完毕，输入y即可开始游戏！");
-    scanf("%c",&choose);
-    if (choose == y)
-        playGame();
+    scanf("%d", &level);
+    if (level > 3)
+    {
+        printf("难度选择有误，游戏已退出。");
+    }
+    else
+    {
+        printf("选择完毕，输入y以开始游戏：");
+        scanf("%s", &choose);
+        if (choose == 'y')
+        {
+            readWordsFromFile();
+            playGame();
+        }
+        else
+        {
+            printf("输入有误，已退出游戏。");
+        }
+    }
     return 0;
 }
